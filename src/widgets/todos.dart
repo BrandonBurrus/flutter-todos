@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:simple_todos/models/todo.dart';
+import '../models/todo.dart';
 
 class Todos extends StatefulWidget {
   Todos({Key key}) : super(key: key);
@@ -9,12 +10,51 @@ class Todos extends StatefulWidget {
 }
 
 class _TodosState extends State<Todos> {
-  List<Todo> todos = <Todo>[];
+  List<Todo> _todos = <Todo>[
+    Todo(description: "Do the dishes"),
+    Todo(description: "Practice playing guiter"),
+    Todo(description: "Vacuum"),
+    Todo(description: "Another test")
+  ];
+
+  void _addTodo(Todo newTodo) {
+    if (newTodo.description.length > 0) {
+      setState(() {
+        _todos.add(newTodo);
+      });
+    }
+  }
+
+  final TextEditingController _newTodoController = TextEditingController();
+
+  @override
+  void dispose() {
+    _newTodoController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('My todos'),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children:
+                _todos.map((todo) => Text(todo.description)).toList().toList(),
+          ),
+        ),
+        TextField(
+          controller: _newTodoController,
+          onSubmitted: (newTodo) {
+            _addTodo(Todo(description: newTodo));
+            _newTodoController.clear();
+          },
+        ),
+      ],
     );
   }
 }

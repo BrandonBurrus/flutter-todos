@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:simple_todos/widgets/todos.dart';
+import 'widgets/todos.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(TodosApp());
 
-class MyApp extends StatelessWidget {
+class TodosApp extends StatelessWidget {
   @override
   build(BuildContext context) {
     return MaterialApp(
-        title: 'Simple to-dos',
         home: Scaffold(
+            appBar: AppBar(title: Text('To-dos')),
             body: SafeArea(
-                child: Center(
-          child: Todos(),
-        ))));
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                    child: Todos()))));
   }
 }
